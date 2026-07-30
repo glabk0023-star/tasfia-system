@@ -1,48 +1,38 @@
 // ===============================
 // Tasfia System V1.0
-// Settings Storage Module
+// Settings Manager
 // ===============================
 
-const SETTINGS_KEY = "tasfia_settings";
+import { initializeLanguage } from "./language.js";
+import { initializeTheme } from "./theme.js";
+import { getCalendar } from "./calendar.js";
+import { getSecurity } from "./security.js";
+import { loadSettings } from "./storage.js";
 
-// Default Settings
-const DEFAULT_SETTINGS = {
-  language: "ps",
-  theme: "blue",
-  mode: "light",
-  calendar: "hijri",
-  fontSize: "medium"
-};
+// ===============================
+// Initialize Settings
+// ===============================
 
-// Load Settings
-export function loadSettings() {
+export function initializeSettings() {
 
-  const data = localStorage.getItem(SETTINGS_KEY);
+    // Load saved settings
+    loadSettings();
 
-  if (!data) {
-    return DEFAULT_SETTINGS;
-  }
+    // Apply language
+    initializeLanguage();
 
-  return JSON.parse(data);
+    // Apply theme
+    initializeTheme();
 
-}
+    // Load calendar
+    getCalendar();
 
-// Save Settings
-export function saveSettings(settings) {
+    // Load security
+    getSecurity();
 
-  localStorage.setItem(
-    SETTINGS_KEY,
-    JSON.stringify(settings)
-  );
+    console.log("Tasfia Settings Initialized");
 
 }
 
-// Reset Settings
-export function resetSettings() {
-
-  localStorage.setItem(
-    SETTINGS_KEY,
-    JSON.stringify(DEFAULT_SETTINGS)
-  );
-
-}
+// Auto Initialize
+initializeSettings();
