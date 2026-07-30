@@ -3,47 +3,61 @@
 // Language Module
 // ===============================
 
-import {
-  loadSettings,
-  saveSettings
-} from "./storage.js";
+import { loadSettings, saveSettings } from "./storage.js";
 
-// Supported Languages
-export const LANGUAGES = {
+import ps from "../lang/ps.js";
+import ar from "../lang/ar.js";
+import fa from "../lang/fa.js";
+import ur from "../lang/ur.js";
+import en from "../lang/en.js";
+
+// ===============================
+// Languages
+// ===============================
+
+const LANGUAGES = {
 
   ps: {
     code: "ps",
     name: "پښتو",
-    direction: "rtl"
+    direction: "rtl",
+    dictionary: ps
   },
 
   ar: {
     code: "ar",
     name: "العربية",
-    direction: "rtl"
+    direction: "rtl",
+    dictionary: ar
   },
 
   fa: {
     code: "fa",
     name: "دری",
-    direction: "rtl"
+    direction: "rtl",
+    dictionary: fa
   },
 
   ur: {
     code: "ur",
     name: "اردو",
-    direction: "rtl"
+    direction: "rtl",
+    dictionary: ur
   },
 
   en: {
     code: "en",
     name: "English",
-    direction: "ltr"
+    direction: "ltr",
+    dictionary: en
   }
 
 };
 
+// ===============================
 // Get Current Language
+// ===============================
+
 export function getLanguage() {
 
   const settings = loadSettings();
@@ -52,11 +66,16 @@ export function getLanguage() {
 
 }
 
+// ===============================
 // Set Language
+// ===============================
+
 export function setLanguage(languageCode) {
 
   if (!LANGUAGES[languageCode]) {
+
     return false;
+
   }
 
   const settings = loadSettings();
@@ -71,26 +90,77 @@ export function setLanguage(languageCode) {
 
 }
 
+// ===============================
+// Get Dictionary
+// ===============================
+
+export function getDictionary() {
+
+  return LANGUAGES[getLanguage()].dictionary;
+
+}
+
+// ===============================
+// Translate
+// ===============================
+
+export function t(key) {
+
+  const dictionary = getDictionary();
+
+  return dictionary[key] || key;
+
+}
+
+// ===============================
 // Apply Language
+// ===============================
+
 export function applyLanguage() {
 
   const language = getLanguage();
 
   document.documentElement.lang = language;
+  document.documentElement.dir = LANGUAGES[language].direction;
 
-  document.documentElement.dir =
-    LANGUAGES[language].direction;
+  const elements = document.querySelectorAll("[data-lang]");
+
+  elements.forEach((element) => {
+
+    const key = element.getAttribute("data-lang");
+
+    if (key) {
+      element.textContent = t(key);
+    }
+
+  });
 
 }
 
+// ===============================
 // Get Language Information
+// ===============================
+
 export function getLanguageInfo() {
 
   return LANGUAGES[getLanguage()];
 
 }
 
+// ===============================
+// Get All Languages
+// ===============================
+
+export function getLanguages() {
+
+  return LANGUAGES;
+
+}
+
+// ===============================
 // Initialize Language
+// ===============================
+
 export function initializeLanguage() {
 
   applyLanguage();
