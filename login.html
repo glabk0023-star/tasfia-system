@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ps" dir="rtl">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Tasfia System Login</title>
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+
+<body>
+
+
+<div class="login-box">
+
+<h1>TASFIA SYSTEM</h1>
+
+<h3>د ننوتلو پاڼه</h3>
+
+
+<form id="loginForm">
+
+
+<label>بریښنالیک</label>
+
+<input 
+type="email"
+id="email"
+placeholder="admin@tasfia.af"
+required>
+
+
+<label>پاسورډ</label>
+
+<input 
+type="password"
+id="password"
+placeholder="12345678"
+required>
+
+
+<button type="submit">
+ننوتل
+</button>
+
+
+</form>
+
+
+<p id="loginMessage"></p>
+
+
+</div>
+
+
+
+<script type="module">
+
+import { login } from "./auth.js";
+
+
+const form = document.getElementById("loginForm");
+
+const message = document.getElementById("loginMessage");
+
+
+
+form.addEventListener("submit", async (e)=>{
+
+
+e.preventDefault();
+
+
+const email = document.getElementById("email").value;
+
+const password = document.getElementById("password").value;
+
+
+
+try {
+
+
+message.innerHTML = "لطفاً انتظار وکړئ...";
+
+
+await login(email,password);
+
+
+
+} catch(error){
+
+
+console.error(error);
+
+message.innerHTML = "ستونزه رامنځته شوه: " + error.message;
+
+
+}
+
+
+
+});
+
+
+</script>
+
+
+</body>
+
+</html>
