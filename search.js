@@ -1,208 +1,437 @@
 // ===============================
-// search.js
 // Tasfia System V1.0
+// search.js
+// Search Records
 // ===============================
+
 
 import { db } from "./firebase.js";
 
+
 import {
-  collection,
-  query,
-  where,
-  getDocs
+
+collection,
+
+query,
+
+where,
+
+getDocs
+
 } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
 
-const formBtn = document.getElementById("searchFormBtn");
 
-if (formBtn) {
-  
-  formBtn.addEventListener("click", searchByForm);
-  
-}
 
-async function searchByForm() {
-    
-    const formNumber = document
-      .getElementById("searchFormNumber")
-      .value
-      .trim();
-    
-    if (formNumber === "") {
-      
-      alert("د فورمې نمبر ولیکئ.");
-      
-      return;
-      
-    }
-    
-    const q = query(
-      
-      collection(db, "records"),
-      
-      where("formNumber", "==", formNumber)
-      
-    );
-    
-    const snapshot = await getDocs(q);
-    
-    const result = document.getElementById("searchResult");
-    
-    const verify = document.getElementById("verifyMessage");
-    
-    if (snapshot.empty) {
-      
-      result.style.display = "block";
-      
-      verify.className = "fakeForm";
-      
-      verify.innerHTML = "❌ دا فورمه جعلي ده";
-      
-      document.getElementById("personInfo").style.display = "none";
-      
-      return;
-      
-    }
-    
-    const doc = snapshot.docs[0].data();
-    
-    result.style.display = "block";
-    
-    document.getElementById("personInfo").style.display = "block";
-    
-    verify.className = "realForm";
-    
-    verify.innerHTML = "✅ دا فورمه اصلي ده";document.getElementById("r_id").innerHTML = doc.idNumber;
 
-document.getElementById("r_form").innerHTML = doc.formNumber;
-
-document.getElementById("r_formType").innerHTML = doc.formType;
-
-document.getElementById("r_name").innerHTML = doc.name;
-
-document.getElementById("r_lastname").innerHTML = doc.lastname;
-
-document.getElementById("r_father").innerHTML = doc.father;
-
-document.getElementById("r_grandfather").innerHTML = doc.grandFather;
-
-document.getElementById("r_age").innerHTML = doc.age;
-
-document.getElementById("r_tazkira").innerHTML = doc.tazkiraNumber;
-
-document.getElementById("r_phone").innerHTML = doc.phoneNumber;
-
-document.getElementById("r_job").innerHTML = doc.job;
-
-}// ===============================
-// Search By Tazkira Number
+// ===============================
+// Search By Form Number
 // ===============================
 
-const tazkiraBtn = document.getElementById("searchTazkiraBtn");
 
-if (tazkiraBtn) {
-  tazkiraBtn.addEventListener("click", searchByTazkira);
+const formSearchBtn =
+document.getElementById(
+"searchFormBtn"
+);
+
+
+
+if(formSearchBtn){
+
+
+formSearchBtn.onclick =
+async ()=>{
+
+
+const formNumber =
+document.getElementById(
+"searchFormNumber"
+).value.trim();
+
+
+
+if(!formNumber){
+
+alert(
+"د فورم نمبر ولیکئ"
+);
+
+return;
+
 }
 
-async function searchByTazkira() {
-  
-  const tazkira = document
-    .getElementById("searchTazkiraNumber")
-    .value
-    .trim();
-  
-  if (tazkira === "") {
-    alert("د تذکرې نمبر ولیکئ.");
-    return;
-  }
-  
-  const q = query(
-    collection(db, "records"),
-    where("tazkiraNumber", "==", tazkira)
-  );
-  
-  const snapshot = await getDocs(q);
-  
-  if (snapshot.empty) {
-    
-    document.getElementById("searchResult").style.display = "block";
-    document.getElementById("verifyMessage").className = "fakeForm";
-    document.getElementById("verifyMessage").innerHTML = "❌ دا تذکره ثبت شوې نه ده";
-    document.getElementById("personInfo").style.display = "none";
-    
-    return;
-  }
-  
-  showRecord(snapshot.docs[0].data());
-  
+
+
+
+await searchRecord(
+"formNumber",
+formNumber
+);
+
+
+
+};
+
+
+}
+
+
+
+
+
+// ===============================
+// Search By Tazkira
+// ===============================
+
+
+const tazkiraSearchBtn =
+document.getElementById(
+"searchTazkiraBtn"
+);
+
+
+
+if(tazkiraSearchBtn){
+
+
+tazkiraSearchBtn.onclick =
+async ()=>{
+
+
+const tazkira =
+document.getElementById(
+"searchTazkiraNumber"
+).value.trim();
+
+
+
+
+if(!tazkira){
+
+
+alert(
+"د تذکرې نمبر ولیکئ"
+);
+
+
+return;
+
+
+}
+
+
+
+await searchRecord(
+"tazkiraNumber",
+tazkira
+);
+
+
+
+};
+
+
 }
 
 // ===============================
-// Search By Phone Number
+// Search Function
 // ===============================
 
-const phoneBtn = document.getElementById("searchPhoneBtn");
 
-if (phoneBtn) {
-  phoneBtn.addEventListener("click", searchByPhone);
+async function searchRecord(
+field,
+value
+){
+
+
+try{
+
+
+const q =
+query(
+
+collection(db,"records"),
+
+where(
+field,
+"==",
+value
+)
+
+);
+
+
+
+const snapshot =
+await getDocs(q);
+
+
+
+
+const result =
+document.getElementById(
+"personInfo"
+);
+
+
+
+const verify =
+document.getElementById(
+"verifyMessage"
+);
+
+
+
+
+if(snapshot.empty){
+
+
+if(verify){
+
+
+verify.innerHTML =
+"دا معلومات پیدا نه شول";
+
+
+verify.className =
+"fakeForm";
+
+
 }
 
-async function searchByPhone() {
-  
-  const phone = document
-    .getElementById("searchPhoneNumber")
-    .value
-    .trim();
-  
-  if (phone === "") {
-    alert("د ټلیفون نمبر ولیکئ.");
-    return;
-  }
-  
-  const q = query(
-    collection(db, "records"),
-    where("phoneNumber", "==", phone)
-  );
-  
-  const snapshot = await getDocs(q);
-  
-  if (snapshot.empty) {
-    
-    document.getElementById("searchResult").style.display = "block";
-    document.getElementById("verifyMessage").className = "fakeForm";
-    document.getElementById("verifyMessage").innerHTML = "❌ دا شمېره ثبت شوې نه ده";
-    document.getElementById("personInfo").style.display = "none";
-    
-    return;
-  }
-  
-  showRecord(snapshot.docs[0].data());
-  
+
+
+if(result){
+
+result.style.display =
+"none";
+
+}
+
+
+return;
+
+
+}
+
+
+
+
+snapshot.forEach((doc)=>{
+
+
+const data =
+doc.data();
+
+
+
+
+if(verify){
+
+
+
+if(data.status === "DELETED"){
+
+
+verify.innerHTML =
+"دا فورمه حذف شوې ده";
+
+
+verify.className =
+"fakeForm";
+
+
+
+}else{
+
+
+verify.innerHTML =
+"دا فورمه اصلي ده";
+
+
+verify.className =
+"realForm";
+
+
+}
+
+
+
+}
+
+
+
+
+if(result){
+
+
+result.style.display =
+"block";
+
+
+
+document.getElementById(
+"r_id"
+).innerHTML =
+doc.id;
+
+
+
+document.getElementById(
+"r_form"
+).innerHTML =
+data.formNumber || "";
+
+
+
+document.getElementById(
+"r_tazkira"
+).innerHTML =
+data.tazkiraNumber || "";
+
+
+
+document.getElementById(
+"r_name"
+).innerHTML =
+data.firstName || "";
+
+
+
+document.getElementById(
+"r_lastname"
+).innerHTML =
+data.lastName || "";
+
+
+
+document.getElementById(
+"r_father"
+).innerHTML =
+data.fatherName || "";
+
+
+
+document.getElementById(
+"r_grandfather"
+).innerHTML =
+data.grandFatherName || "";
+
+
+
+document.getElementById(
+"r_age"
+).innerHTML =
+data.age || "";
+
+
+
+document.getElementById(
+"r_job"
+).innerHTML =
+data.job || "";
+
+
+
+}
+
+
+
+});
+
+
+}catch(error){
+
+
+console.error(
+"Search Error:",
+error
+);
+
+
+alert(
+"په لټون کې ستونزه راغله"
+);
+
+
+}
+
+
 }
 
 // ===============================
-// Common Result Function
+// Search Input Protection
 // ===============================
 
-function showRecord(doc) {
-  
-  document.getElementById("searchResult").style.display = "block";
-  
-  document.getElementById("personInfo").style.display = "block";
-  
-  document.getElementById("verifyMessage").className = "realForm";
-  
-  document.getElementById("verifyMessage").innerHTML = "✅ معلومات وموندل شول";
-  
-  document.getElementById("r_id").innerHTML = doc.idNumber;
-  document.getElementById("r_form").innerHTML = doc.formNumber;
-  document.getElementById("r_formType").innerHTML = doc.formType;
-  document.getElementById("r_name").innerHTML = doc.name;
-  document.getElementById("r_lastname").innerHTML = doc.lastname;
-  document.getElementById("r_father").innerHTML = doc.father;
-  document.getElementById("r_grandfather").innerHTML = doc.grandFather;
-  document.getElementById("r_age").innerHTML = doc.age;
-  document.getElementById("r_tazkira").innerHTML = doc.tazkiraNumber;
-  document.getElementById("r_phone").innerHTML = doc.phoneNumber;
-  document.getElementById("r_job").innerHTML = doc.job;
-  
+
+const searchTazkiraInput =
+document.getElementById(
+"searchTazkiraNumber"
+);
+
+
+
+if(searchTazkiraInput){
+
+
+searchTazkiraInput.addEventListener(
+"input",
+()=>{
+
+
+searchTazkiraInput.value =
+searchTazkiraInput.value.replace(
+/[^0-9-]/g,
+""
+);
+
+
+});
+
+
 }
+
+
+
+
+
+const searchFormInput =
+document.getElementById(
+"searchFormNumber"
+);
+
+
+
+if(searchFormInput){
+
+
+searchFormInput.addEventListener(
+"input",
+()=>{
+
+
+searchFormInput.value =
+searchFormInput.value.replace(
+/\s/g,
+""
+);
+
+
+});
+
+
+}
+
+
+
+
+
+// ===============================
+// Export Function
+// ===============================
+
+
+export {
+
+searchRecord
+
+};
