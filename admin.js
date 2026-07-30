@@ -1,130 +1,398 @@
 // ===============================
-// admin.js
 // Tasfia System V1.0
+// admin.js
+// User Roles Management
 // ===============================
+
 
 import { db } from "./firebase.js";
 
+
 import {
-    collection,
-    getDocs,
-    addDoc,
-    deleteDoc,
-    doc,
-    updateDoc,
-    serverTimestamp
+
+collection,
+
+getDocs,
+
+doc,
+
+updateDoc
+
 } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
 
+
+
+
+
 // ===============================
-// Load All Admins
+// Load Users
 // ===============================
 
-export async function loadAdmins() {
-    
-    const snapshot = await getDocs(collection(db, "admins"));
-    
-    const table = document.getElementById("adminTable");
-    
-    if (!table) return;
-    
-    table.innerHTML = "";
-    
-    snapshot.forEach((item) => {
-        
-        const data = item.data();
-        
-        table.innerHTML += `
 
-<tr>
+async function loadUsers(){
 
-<td>${data.name}</td>
 
-<td>${data.email}</td>
 
-<td>${data.role}</td>
+try{
 
-<td>${data.status}</td>
+
+const snapshot =
+await getDocs(
+collection(db,"users")
+);
+
+
+
+const table =
+document.getElementById(
+"usersTable"
+);
+
+
+
+if(!table){
+
+return;
+
+}
+
+
+
+
+table.innerHTML = "";
+
+
+
+
+snapshot.forEach((item)=>{
+
+
+const user =
+item.data();
+
+
+
+const row =
+document.createElement(
+"tr"
+);
+
+
+
+row.innerHTML = `
+
+<td>
+${user.name || ""}
+</td>
+
+
+<td>
+${user.email || ""}
+</td>
+
+
+<td>
+${user.role || "USER"}
+</td>
+
 
 <td>
 
-<button onclick="disableAdmin('${item.id}')">
+<button onclick="changeRole('${item.id}')">
 
-بند
-
-</button>
-
-<button onclick="removeAdmin('${item.id}')">
-
-حذف
+بدلون رول
 
 </button>
+
 
 </td>
 
-</tr>
-
 `;
-        
-    });
-    
-}// ===============================
-// Add Admin
+
+
+
+table.appendChild(row);
+
+
+
+});
+
+
+
+}catch(error){
+
+
+console.error(
+"Load Users Error:",
+error
+);
+
+
+}
+
+
+
+}
+
+
+
+
+
+loadUsers();
+
+// ===============================
+// Change User Role
 // ===============================
 
-export async function addAdmin(name, email) {
-    
-    await addDoc(collection(db, "admins"), {
-        
-        name,
-        
-        email,
-        
-        role: "ADMIN",
-        
-        status: "ACTIVE",
-        
-        createdAt: serverTimestamp()
-        
-    });
-    
-    alert("✅ نوی Admin جوړ شو.");
-    
-    loadAdmins();
-    
+
+window.changeRole = async function(
+
+userId
+
+){
+
+
+
+const newRole =
+prompt(
+
+"نوی رول ولیکئ: SUPER_ADMIN / ADMIN / USER"
+
+);
+
+
+
+
+if(!newRole){
+
+return;
+
+}
+
+
+
+
+
+try{
+
+
+
+await updateDoc(
+
+doc(
+db,
+"users",
+userId
+),
+
+{
+
+
+role:
+
+newRole
+
+
+
+}
+
+
+);
+
+
+
+
+
+alert(
+
+"رول په بریالیتوب بدل شو"
+
+);
+
+
+
+
+loadUsers();
+
+
+
+
+}catch(error){
+
+
+
+console.error(
+
+"Role Update Error:",
+
+error
+
+);
+
+
+
+alert(
+
+"د رول بدلون کې ستونزه راغله"
+
+);
+
+
+
+}
+
+
+
+};
+
+
+
+
+
+// ===============================
+// Permission Check
+// ===============================
+
+
+export function hasPermission(
+
+role,
+
+action
+
+){
+
+
+
+const permissions = {
+
+
+
+SUPER_ADMIN:[
+
+"CREATE",
+
+"UPDATE",
+
+"DELETE",
+
+"MANAGE_USERS"
+
+],
+
+
+
+ADMIN:[
+
+"CREATE",
+
+"UPDATE"
+
+],
+
+
+
+USER:[
+
+"SEARCH"
+
+]
+
+
+
+};
+
+
+
+
+return permissions[role]?.includes(
+
+action
+
+);
+
+
+
 }
 
 // ===============================
-// Disable Admin
+// Admin Profile Information
 // ===============================
 
-window.disableAdmin = async function(id) {
-    
-    await updateDoc(doc(db, "admins", id), {
-        
-        status: "DISABLED"
-        
-    });
-    
-    alert("Admin بند شو.");
-    
-    loadAdmins();
-    
+
+const adminInfo = {
+
+
+name:
+"حافظ محیب الله (حافظ ایوب)",
+
+
+phone:
+"0705965475",
+
+
+job:
+"افسر سوانح – ۵۰۲ پیاده لواء"
+
+
+};
+
+
+
+
+
+export function getAdminInfo(){
+
+
+return adminInfo;
+
+
 }
 
+
+
+
 // ===============================
-// Delete Admin
+// Protect Admin Page
 // ===============================
 
-window.removeAdmin = async function(id) {
-    
-    if (!confirm("ایا حذف یې کړئ؟")) return;
-    
-    await deleteDoc(doc(db, "admins", id));
-    
-    alert("Admin حذف شو.");
-    
-    loadAdmins();
-    
+
+export function checkAdminAccess(role){
+
+
+
+if(
+
+role !== "SUPER_ADMIN" &&
+
+role !== "ADMIN"
+
+){
+
+
+
+alert(
+
+"تاسو د دې برخې اجازه نه لرئ"
+
+);
+
+
+
+window.location.href =
+"index.html";
+
+
+
+return false;
+
+
 }
 
-loadAdmins();
+
+
+return true;
+
+
+
+}
