@@ -2,228 +2,215 @@
 <html lang="ps" dir="rtl">
 
 <head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Tasfia System V1.0</title>
+
 <link rel="manifest" href="manifest.json">
+
 <meta name="theme-color" content="#0d47a1">
-<link rel="icon" type="image/png" href="icon-192.png">
+
+<link rel="icon" href="icon-192.png">
+
 <link rel="apple-touch-icon" href="icon-192.png">
-     
-     <meta charset="UTF-8">
-     
-     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     
-     <title>Tasfia System V1.0</title>
-     
-     <link rel="stylesheet" href="style.css">
-     
+
+<link rel="stylesheet" href="style.css">
+
 </head>
 
-<link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#0d47a1">
-<link rel="apple-touch-icon" href="icon-192.png">
 
 <body>
-     
-     
-     <header class="top-header">
-          
-          
-          <div class="logo">
-               
-               <h2>TASFIA SYSTEM</h2>
-               
-               <p>
-                    Verification & Registration System
-               </p>
-               
-          </div>
-          
-          
-          
-          <div class="header-buttons">
-               
-               
-               <button id="homeBtn">
-                    🏠 کور
-               </button>
-               
-               
-               <button id="backBtn">
-                    ⬅ شاته
-               </button>
-               
-               
-               <button id="refreshBtn">
-                    🔄 ریفریش
-               </button>
-               
-               
-               <button id="logoutBtn">
-                    🚪 وتل
-               </button>
-               
-               
-          </div>
-          
-          
-     </header>
-     
-     
-     
-     
-     
-     <div class="container">
-          
-          
-          
-          <aside class="sidebar">
-               
-               
-               <h3>
-                    اصلي مینو
-               </h3>
-               
-               
-               
-               <ul>
-                    
-                    
-                    <li id="dashboardMenu">
-                         📊 ډشبورډ
-                    </li>
-                    
-                    
-                    
-                    <li id="registerMenu">
-                         📝 نوی ثبت
-                    </li>
-                    
-                    
-                    
-                    <li id="searchMenu">
-                         🔍 لټون
-                    </li>
-                    
-                    
-                    
-                    <li id="reportsMenu">
-                         📄 راپورونه
-                    </li>
-                    
-                    
-                    
-                    <li id="adminMenu">
-                         👥 اډمین
-                    </li>
-                    
-                    
-                    
-                    <li id="settingsMenu">
-                         ⚙ تنظیمات
-                    </li>
-                    
-                    
-               </ul>
-               
-               
-          </aside>
-          
-          
-          
-          
-          
-          <main id="mainContent">
-               
-               
-               
-               
-               
-               <!-- Dashboard -->
-               
-               
-               <section id="dashboardPage" class="page">
-                    
-                    
-                    <h1>
-                         📊 ډشبورډ
-                    </h1>
-                    
-                    
-                    
-                    <div class="cards">
-                         
-                         
-                         <div class="card">
-                              
-                              <h2 id="totalRecords">
-                                   0
-                              </h2>
-                              
-                              <p>
-                                   ټول ثبت شوي کسان
-                              </p>
-                              
-                         </div>
-                         
-                         
-                         
-                         
-                         <div class="card">
-                              
-                              <h2 id="todayRecords">
-                                   0
-                              </h2>
-                              
-                              <p>
-                                   د نن ورځې ثبت
-                              </p>
-                              
-                         </div>
-                         
-                         
-                         
-                         
-                         
-                         <div class="card">
-                              
-                              <h2 id="adminCount">
-                                   0
-                              </h2>
-                              
-                              <p>
-                                   ټول اډمینان
-                              </p>
-                              
-                         </div>
-                         
-                         
-                         
-                         
-                         <div class="card">
-                              
-                              <h2 id="userCount">
-                                   0
-                              </h2>
-                              
-                              <p>
-                                   ټول کاروونکي
-                              </p>
-                              
-                         </div>
-                         
-                         
-                         
-                    </div>
-                    
-                    
-               </section><!-- ===============================
-     Register Page
+
+
+<header class="top-header">
+
+
+<div class="logo">
+
+<h2 data-lang="APP_NAME">
+Tasfia System
+</h2>
+
+<p>
+Verification & Registration System
+</p>
+
+</div>
+
+
+<div class="header-buttons">
+
+
+<button id="homeBtn" data-lang="HOME">
+🏠 کور
+</button>
+
+
+<button id="backBtn">
+⬅ شاته
+</button>
+
+
+<button id="refreshBtn">
+🔄 ریفریش
+</button>
+
+
+<button id="logoutBtn" data-lang="LOGOUT">
+🚪 وتل
+</button>
+
+
+</div>
+
+
+</header>
+
+
+
+<div class="container">
+
+
+<aside class="sidebar">
+
+
+<h3>
+<span data-lang="MENU">اصلي مینو</span>
+</h3>
+
+
+<ul>
+
+
+<li id="dashboardMenu" data-lang="DASHBOARD">
+📊 ډشبورډ
+</li>
+
+
+<li id="registerMenu" data-lang="REGISTER">
+📝 نوی ثبت
+</li>
+
+
+<li id="searchMenu" data-lang="SEARCH">
+🔍 لټون
+</li>
+
+
+<li id="reportsMenu" data-lang="REPORTS">
+📄 راپورونه
+</li>
+
+
+<li id="adminMenu" data-lang="ADMIN">
+👥 اډمین
+</li>
+
+
+<li id="settingsMenu" data-lang="SETTINGS">
+⚙ تنظیمات
+</li>
+
+
+</ul>
+
+
+</aside>
+
+
+
+<main id="mainContent">
+
+<!-- ===============================
+     Dashboard Page
 ================================ -->
 
+<section id="dashboardPage" class="page">
+
+
+<h1 data-lang="DASHBOARD">
+📊 ډشبورډ
+</h1>
+
+
+<div class="cards">
+
+
+<div class="card">
+
+<h2 id="totalRecords">
+0
+</h2>
+
+<p>
+ټول ثبت شوي کسان
+</p>
+
+</div>
+
+
+
+<div class="card">
+
+<h2 id="todayRecords">
+0
+</h2>
+
+<p>
+د نن ورځې ثبت
+</p>
+
+</div>
+
+
+
+<div class="card">
+
+<h2 id="adminCount">
+0
+</h2>
+
+<p>
+ټول اډمینان
+</p>
+
+</div>
+
+
+
+<div class="card">
+
+<h2 id="userCount">
+0
+</h2>
+
+<p>
+ټول کاروونکي
+</p>
+
+</div>
+
+
+</div>
+
+
+</section>
+
+
+
+
+
+<!-- ===============================
+     Register Page
+================================ -->
 
 <section id="registerPage" class="page" style="display:none;">
 
 
-<h1>
+<h1 data-lang="REGISTER">
 📝 نوی ثبت
 </h1>
 
@@ -235,17 +222,13 @@
 <div class="form-grid">
 
 
-
 <div>
 
 <label>
 ID نمبر
 </label>
 
-<input
-type="text"
-id="idNumber"
-readonly>
+<input type="text" id="idNumber" readonly>
 
 </div>
 
@@ -257,10 +240,7 @@ readonly>
 د فورمې نمبر
 </label>
 
-<input
-type="text"
-id="formNumber"
-required>
+<input type="text" id="formNumber" required>
 
 </div>
 
@@ -275,26 +255,21 @@ required>
 
 <select id="formType" required>
 
-
 <option value="">
 انتخاب کړئ
 </option>
-
 
 <option>
 مجاهد
 </option>
 
-
 <option>
 د شهید د کورنۍ غړی
 </option>
 
-
 <option>
 همکار
 </option>
-
 
 <option>
 بعدالفتح
@@ -314,10 +289,7 @@ required>
 نوم
 </label>
 
-<input
-type="text"
-id="name"
-required>
+<input type="text" id="name" required>
 
 </div>
 
@@ -329,10 +301,7 @@ required>
 تخلص
 </label>
 
-<input
-type="text"
-id="lastname"
-required>
+<input type="text" id="lastname" required>
 
 </div>
 
@@ -344,10 +313,7 @@ required>
 د پلار نوم
 </label>
 
-<input
-type="text"
-id="father"
-required>
+<input type="text" id="father" required>
 
 </div>
 
@@ -359,10 +325,7 @@ required>
 د نیکه نوم
 </label>
 
-<input
-type="text"
-id="grandFather"
-required>
+<input type="text" id="grandFather" required>
 
 </div>
 
@@ -374,10 +337,7 @@ required>
 د زېږېدو نېټه
 </label>
 
-<input
-type="date"
-id="birthDate"
-required>
+<input type="date" id="birthDate" required>
 
 </div>
 
@@ -389,10 +349,7 @@ required>
 عمر
 </label>
 
-<input
-type="number"
-id="age"
-required>
+<input type="number" id="age" required>
 
 </div>
 
@@ -404,10 +361,7 @@ required>
 د تذکرې نمبر
 </label>
 
-<input
-type="text"
-id="tazkiraNumber"
-required>
+<input type="text" id="tazkiraNumber" required>
 
 </div>
 
@@ -419,9 +373,7 @@ required>
 د ټلیفون نمبر
 </label>
 
-<input
-type="tel"
-id="phoneNumber">
+<input type="tel" id="phoneNumber">
 
 </div>
 
@@ -430,12 +382,10 @@ id="phoneNumber">
 <div>
 
 <label>
-تصیفه شوی ولایت
+تصفیه شوی ولایت
 </label>
 
-
-<select id="tasfiaProvince">
-
+<select id="tasfiaProvince" required>
 
 <option>
 ولایت انتخاب کړئ
@@ -461,76 +411,12 @@ id="phoneNumber">
 ننګرهار
 </option>
 
-
 </select>
 
-
 </div>
 
 
-
-<div>
-
-<label>
-اصلي ولایت
-</label>
-
-<input
-type="text"
-id="originProvince">
-
 </div>
-
-
-
-<div>
-
-<label>
-اصلي ولسوالي
-</label>
-
-<input
-type="text"
-id="originDistrict">
-
-</div>
-
-
-
-<div>
-
-<label>
-اصلي کلی
-</label>
-
-<input
-type="text"
-id="originVillage">
-
-</div>
-
-
-
-<div>
-
-<label>
-اوسنۍ دنده
-</label>
-
-<input
-type="text"
-id="job">
-
-</div>
-
-
-
-</div>
-
-
-
-
-<div style="margin-top:25px;">
 
 
 <button type="submit">
@@ -538,38 +424,26 @@ id="job">
 </button>
 
 
-
 <button type="reset">
 🗑 پاکول
 </button>
 
 
-</div>
-
-
-
 </form>
 
 
-
 </section>
-
-
-
-
 
 <!-- ===============================
      Search Page
 ================================ -->
 
-
 <section id="searchPage" class="page" style="display:none;">
 
 
-<h1>
+<h1 data-lang="SEARCH">
 🔍 لټون
 </h1>
-
 
 
 <div class="search-box">
@@ -613,23 +487,106 @@ placeholder="د تذکرې نمبر">
 <div id="searchResult">
 
 
+<div id="verifyMessage"></div>
+
+
+<div id="personInfo" style="display:none;">
+
+
+<p>
+ID:
+<span id="r_id"></span>
+</p>
+
+
+<p>
+فورمه:
+<span id="r_form"></span>
+</p>
+
+
+<p>
+ډول:
+<span id="r_formType"></span>
+</p>
+
+
+<p>
+نوم:
+<span id="r_name"></span>
+</p>
+
+
+<p>
+تخلص:
+<span id="r_lastname"></span>
+</p>
+
+
+<p>
+د پلار نوم:
+<span id="r_father"></span>
+</p>
+
+
+<p>
+د نیکه نوم:
+<span id="r_grandfather"></span>
+</p>
+
+
+<p>
+عمر:
+<span id="r_age"></span>
+</p>
+
+
+<p>
+تذکره:
+<span id="r_tazkira"></span>
+</p>
+
+
+<p>
+ټلیفون:
+<span id="r_phone"></span>
+</p>
+
+
+<p>
+دنده:
+<span id="r_job"></span>
+</p>
+
+
 </div>
 
 
+</div>
 
-</section><!-- ===============================
+
+</section>
+
+
+
+
+
+<!-- ===============================
      Reports Page
 ================================ -->
 
 <section id="reportsPage" class="page" style="display:none;">
 
-<h1>
+
+<h1 data-lang="REPORTS">
 📄 راپورونه
 </h1>
 
+
 <p>
-د راپورونو برخه به وروسته فعاله شي.
+د راپورونو برخه
 </p>
+
 
 </section>
 
@@ -643,13 +600,16 @@ placeholder="د تذکرې نمبر">
 
 <section id="adminPage" class="page" style="display:none;">
 
-<h1>
+
+<h1 data-lang="ADMIN">
 👥 اډمین
 </h1>
 
+
 <p>
-د اډمین مدیریت برخه.
+د اډمین مدیریت برخه
 </p>
+
 
 </section>
 
@@ -663,24 +623,33 @@ placeholder="د تذکرې نمبر">
 
 <section id="settingsPage" class="page" style="display:none;">
 
-<h1>
+
+<h1 data-lang="SETTINGS">
 ⚙ تنظیمات
 </h1>
 
-<p>
-د سیستم تنظیمات.
-</p>
+
+<div>
+
+
+<button id="languageBtn">
+🌐 ژبه
+</button>
+
+
+<button id="themeBtn">
+🎨 رنګ
+</button>
+
+
+</div>
+
 
 </section>
-
-
-
-
 
 <!-- ===============================
      Footer
 ================================ -->
-
 
 <footer class="footer">
 
@@ -703,12 +672,12 @@ Tasfia System Version 1.0
 📞 0705965475
 </p>
 
+
 <p>
 📧 hafzaywb553@gmail.com
 </p>
 
 </div>
-
 
 
 
@@ -718,7 +687,6 @@ Tasfia System Version 1.0
 
 <p id="currentTime"></p>
 
-
 </div>
 
 
@@ -726,12 +694,9 @@ Tasfia System Version 1.0
 
 
 
-
 </main>
 
 </div>
-
-
 
 
 
@@ -760,18 +725,15 @@ Tasfia System Version 1.0
 
 
 
-
-
 <!-- Login Protection -->
 
 <script type="module">
 
 import { auth } from "./firebase.js";
 
-import { 
-onAuthStateChanged 
+import {
+onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js";
-
 
 
 onAuthStateChanged(auth,(user)=>{
@@ -788,13 +750,25 @@ window.location.href="login.html";
 
 
 </script>
+
+
+
+<!-- Service Worker -->
+
 <script>
+
 if ("serviceWorker" in navigator) {
-  window.addEventListener("load", () => {
-    navigator.serviceWorker.register("./service-worker.js");
-  });
+
+window.addEventListener("load",()=>{
+
+navigator.serviceWorker.register("./service-worker.js");
+
+});
+
 }
+
 </script>
+
 
 
 </body>
