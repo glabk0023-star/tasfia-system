@@ -1,37 +1,137 @@
 // ===============================
+// Tasfia System V1.0
 // app.js
-// Tasfia System
+// Main Application Controller
 // ===============================
 
 
-// د ټولو پاڼو پټول
-function hideAllPages() {
-    
-    const pages = document.querySelectorAll(".page");
-    
-    pages.forEach(page => {
-        
-        page.style.display = "none";
-        
+// ===============================
+// Import Language System
+// ===============================
+
+import {
+    initializeLanguage,
+    setLanguage
+} from "./settings/language.js";
+
+
+
+// ===============================
+// Page Controller
+// ===============================
+
+const pages = [
+
+    "dashboardPage",
+    "registerPage",
+    "searchPage",
+    "reportsPage",
+    "adminPage",
+    "settingsPage"
+
+];
+
+
+
+function showPage(pageID) {
+
+
+    pages.forEach((page)=>{
+
+
+        const element = document.getElementById(page);
+
+
+        if(element){
+
+            element.style.display =
+            "none";
+
+        }
+
+
     });
-    
-}
 
 
-// د یوې پاڼې ښکاره کول
-function showPage(pageId) {
-    
-    hideAllPages();
-    
-    const page = document.getElementById(pageId);
-    
-    if (page) {
-        
-        page.style.display = "block";
-        
+
+    const activePage =
+    document.getElementById(pageID);
+
+
+
+    if(activePage){
+
+        activePage.style.display =
+        "block";
+
     }
-    
+
 }
+
+
+
+// ===============================
+// Menu Buttons
+// ===============================
+
+
+const menuActions = {
+
+
+    dashboardMenu:
+    "dashboardPage",
+
+
+    registerMenu:
+    "registerPage",
+
+
+    searchMenu:
+    "searchPage",
+
+
+    reportsMenu:
+    "reportsPage",
+
+
+    adminMenu:
+    "adminPage",
+
+
+    settingsMenu:
+    "settingsPage"
+
+
+};
+
+
+
+Object.keys(menuActions).forEach((id)=>{
+
+
+    const button =
+    document.getElementById(id);
+
+
+
+    if(button){
+
+
+        button.addEventListener(
+        "click",
+        ()=>{
+
+            showPage(
+            menuActions[id]
+            );
+
+        });
+
+
+    }
+
+
+});
 
 
 
@@ -40,137 +140,217 @@ function showPage(pageId) {
 // ===============================
 
 
-// کور
-document.getElementById("homeBtn").onclick = () => {
-    
-    showPage("dashboardPage");
-    
+const homeBtn =
+document.getElementById("homeBtn");
+
+
+if(homeBtn){
+
+
+homeBtn.onclick = ()=>{
+
+
+    showPage(
+    "dashboardPage"
+    );
+
+
 };
 
 
-
-// شاته
-document.getElementById("backBtn").onclick = () => {
-    
-    history.back();
-    
-};
-
-
-
-// ریفریش
-document.getElementById("refreshBtn").onclick = () => {
-    
-    location.reload();
-    
-};
-
-
-
-// وتل
-import { logout } from "./auth.js";
-
-
-document.getElementById("logoutBtn").onclick = async () => {
-    
-    await logout();
-    
-};
-
-
-
-
-// ===============================
-// اصلي مینو
-// ===============================
-
-
-document.getElementById("dashboardMenu").onclick = () => {
-    
-    showPage("dashboardPage");
-    
-};
-
-
-
-document.getElementById("registerMenu").onclick = () => {
-    
-    showPage("registerPage");
-    
-};
-
-
-
-document.getElementById("searchMenu").onclick = () => {
-    
-    showPage("searchPage");
-    
-};
-
-
-
-document.getElementById("reportsMenu").onclick = () => {
-    
-    showPage("reportsPage");
-    
-};
-
-
-
-document.getElementById("adminMenu").onclick = () => {
-    
-    showPage("adminPage");
-    
-};
-
-
-
-document.getElementById("settingsMenu").onclick = () => {
-    
-    showPage("settingsPage");
-    
-};
-
-
-
-
-
-// ===============================
-// ساعت او تاریخ
-// ===============================
-
-
-function updateClock() {
-    
-    
-    const now = new Date();
-    
-    
-    const date = document.getElementById("currentDate");
-    
-    const time = document.getElementById("currentTime");
-    
-    
-    
-    if (date) {
-        
-        date.innerHTML = now.toLocaleDateString("ps-AF");
-        
-    }
-    
-    
-    
-    if (time) {
-        
-        time.innerHTML = now.toLocaleTimeString("ps-AF");
-        
-    }
-    
-    
 }
 
 
 
-setInterval(updateClock, 1000);
+const backBtn =
+document.getElementById("backBtn");
 
-updateClock();
+
+if(backBtn){
+
+
+backBtn.onclick = ()=>{
+
+
+    history.back();
+
+
+};
+
+
+}
+
+
+
+const refreshBtn =
+document.getElementById("refreshBtn");
+
+
+if(refreshBtn){
+
+
+refreshBtn.onclick = ()=>{
+
+
+    location.reload();
+
+
+};
+
+
+}
+
+// ===============================
+// Logout Button
+// ===============================
+
+const logoutBtn =
+document.getElementById("logoutBtn");
+
+
+if(logoutBtn){
+
+
+logoutBtn.onclick = ()=>{
+
+
+    const confirmLogout =
+    confirm("ایا غواړئ ووځئ؟");
+
+
+    if(confirmLogout){
+
+
+        window.location.href =
+        "login.html";
+
+
+    }
+
+
+};
+
+
+}
+
+
+
+
+// ===============================
+// Language Buttons
+// ===============================
+
+
+const languageBtn =
+document.getElementById("languageBtn");
+
+
+if(languageBtn){
+
+
+languageBtn.onclick = ()=>{
+
+
+    const lang =
+    prompt(
+    "ژبه انتخاب کړئ: ps, ar, fa, ur, en"
+    );
+
+
+    if(lang){
+
+
+        setLanguage(lang);
+
+
+        location.reload();
+
+
+    }
+
+
+};
+
+
+}
+
+
+
+
+// ===============================
+// Current Date And Time
+// ===============================
+
+
+function updateDateTime(){
+
+
+    const now =
+    new Date();
+
+
+
+    const date =
+    document.getElementById(
+    "currentDate"
+    );
+
+
+    const time =
+    document.getElementById(
+    "currentTime"
+    );
+
+
+
+    if(date){
+
+
+        date.innerHTML =
+        now.toLocaleDateString(
+        "ps-AF"
+        );
+
+
+    }
+
+
+
+    if(time){
+
+
+        time.innerHTML =
+        now.toLocaleTimeString(
+        "ps-AF"
+        );
+
+
+    }
+
+
+}
+
+
+
+setInterval(
+updateDateTime,
+1000
+);
+
+
+updateDateTime();
+
+
+
+
+// ===============================
+// Start System
+// ===============================
+
+
+initializeLanguage();
+
+
+showPage(
+"dashboardPage"
+);
