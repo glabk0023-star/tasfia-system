@@ -1,193 +1,388 @@
 // ===============================
-// register.js
 // Tasfia System V1.0
+// register.js
+// Register New Record
 // ===============================
+
 
 import { db } from "./firebase.js";
 
+
 import {
-  collection,
-  addDoc,
-  query,
-  where,
-  getDocs,
-  serverTimestamp
+
+collection,
+
+addDoc,
+
+getDocs,
+
+query,
+
+where,
+
+serverTimestamp
+
 } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
 
-const form = document.getElementById("registerForm");
 
-if (form) {
-  
-  form.addEventListener("submit", saveRecord);
-  
-}
 
-async function saveRecord(e) {
-    
-    e.preventDefault();
-    
-    const idNumber =
-      document.getElementById("idNumber").value.trim();
-    
-    const formNumber =
-      document.getElementById("formNumber").value.trim();
-    
-    const formType =
-      document.getElementById("formType").value;
-    
-    const name =
-      document.getElementById("name").value.trim();
-    
-    const lastname =
-      document.getElementById("lastname").value.trim();
-    
-    const father =
-      document.getElementById("father").value.trim();
-    
-    const grandFather =
-      document.getElementById("grandFather").value.trim();
-    
-    const birthDate =
-      document.getElementById("birthDate").value;
-    
-    const age =
-      document.getElementById("age").value;
-    
-    const tazkiraNumber =
-      document.getElementById("tazkiraNumber").value.trim();
-    
-    const phoneNumber =
-      document.getElementById("phoneNumber").value.trim();
-    
-    const tasfiaProvince =
-      document.getElementById("tasfiaProvince").value;
-    
-    const originProvince =
-      document.getElementById("originProvince").value.trim();
-    
-    const originDistrict =
-      document.getElementById("originDistrict").value.trim();
-    
-    const originVillage =
-      document.getElementById("originVillage").value.trim();
-    
-    const currentProvince =
-      document.getElementById("currentProvince").value.trim();
-    
-    const currentDistrict =
-      document.getElementById("currentDistrict").value.trim();
-    
-    const currentVillage =
-      document.getElementById("currentVillage").value.trim();
-    
-    const job =
-      document.getElementById("job").value.trim();
-    
-    const leaderName =
-      document.getElementById("leaderName").value.trim();
-    
-    const leaderLastName =
-      document.getElementById("leaderLastName").value.trim();
-    
-    const history =
-      document.getElementById("history").value.trim();// ===============================
+
+
+// ===============================
+// Register Form
+// ===============================
+
+
+const registerForm =
+document.getElementById("registerForm");
+
+
+
+
+if(registerForm){
+
+
+
+registerForm.addEventListener(
+"submit",
+async(e)=>{
+
+
+e.preventDefault();
+
+
+
+
+try{
+
+
+
+const formNumber =
+document.getElementById(
+"formNumber"
+).value.trim();
+
+
+
+
+const tazkira =
+document.getElementById(
+"tazkiraNumber"
+).value.trim();
+
+
+
+
+
 // Check Duplicate Form Number
-// ===============================
 
-const formQuery = query(
-  collection(db, "records"),
-  where("formNumber", "==", formNumber)
+
+const checkForm =
+query(
+
+collection(db,"records"),
+
+where(
+"formNumber",
+"==",
+formNumber
+)
+
 );
 
-const formSnapshot = await getDocs(formQuery);
 
-if (!formSnapshot.empty) {
-  
-  alert("❌ دا د فورمې نمبر مخکې ثبت شوی دی.");
-  
-  return;
-  
+
+const formSnapshot =
+await getDocs(checkForm);
+
+
+
+
+if(!formSnapshot.empty){
+
+
+alert(
+"دا فورم نمبر مخکې ثبت شوی دی"
+);
+
+
+return;
+
+
+}
+
+
+
+
+
+// Check Tazkira Format
+
+
+const tazkiraPattern =
+/^\d{4}-\d{4}-\d{5}$/;
+
+
+
+
+if(!tazkiraPattern.test(tazkira)){
+
+
+alert(
+"د تذکرې نمبر سم فارمیټ نه لري"
+);
+
+
+return;
+
+
 }
 
 // ===============================
-// Check Duplicate Tazkira Number
+// Collect Form Data
 // ===============================
 
-const tazkiraQuery = query(
-  collection(db, "records"),
-  where("tazkiraNumber", "==", tazkiraNumber)
+
+const data = {
+
+
+formNumber: formNumber,
+
+
+tazkiraNumber: tazkira,
+
+
+firstName:
+document.getElementById(
+"firstName"
+).value.trim(),
+
+
+lastName:
+document.getElementById(
+"lastName"
+).value.trim(),
+
+
+fatherName:
+document.getElementById(
+"fatherName"
+).value.trim(),
+
+
+grandFatherName:
+document.getElementById(
+"grandFatherName"
+).value.trim(),
+
+
+birthDate:
+document.getElementById(
+"birthDate"
+).value,
+
+
+age:
+Number(
+document.getElementById(
+"age"
+).value
+),
+
+
+tasfiaProvince:
+document.getElementById(
+"tasfiaProvince"
+).value,
+
+
+
+phone:
+document.getElementById(
+"phone"
+)?.value || "",
+
+
+
+job:
+document.getElementById(
+"job"
+)?.value || "",
+
+
+
+jihadiHistory:
+document.getElementById(
+"jihadiHistory"
+)?.value || "",
+
+
+
+status:
+"ACTIVE",
+
+
+
+createdAt:
+serverTimestamp(),
+
+
+
+updatedAt:
+null
+
+
+
+};
+
+
+
+
+
+// ===============================
+// Save To Firestore
+// ===============================
+
+
+const docRef =
+await addDoc(
+
+collection(
+db,
+"records"
+),
+
+data
+
 );
 
-const tazkiraSnapshot = await getDocs(tazkiraQuery);
 
-if (!tazkiraSnapshot.empty) {
-  
-  alert("❌ دا د تذکرې نمبر مخکې ثبت شوی دی.");
-  
-  return;
-  
+
+
+
+alert(
+"معلومات په بریالیتوب ثبت شوې"
+);
+
+
+
+registerForm.reset();
+
+
+
+
+}catch(error){
+
+
+
+console.error(
+"Register Error:",
+error
+);
+
+
+
+alert(
+"ثبت کې ستونزه راغله"
+);
+
+
+
 }
 
-// ===============================
-// Save Record
-// ===============================
 
-await addDoc(collection(db, "records"), {
-  
-  idNumber,
-  
-  formNumber,
-  
-  formType,
-  
-  name,
-  
-  lastname,
-  
-  father,
-  
-  grandFather,
-  
-  birthDate,
-  
-  age,
-  
-  tazkiraNumber,
-  
-  phoneNumber,
-  
-  tasfiaProvince,
-  
-  originProvince,
-  
-  originDistrict,
-  
-  originVillage,
-  
-  currentProvince,
-  
-  currentDistrict,
-  
-  currentVillage,
-  
-  job,
-  
-  leaderName,
-  
-  leaderLastName,
-  
-  history,
-  
-  createdAt: serverTimestamp(),
-  
-  status: "ACTIVE"
-  
+
 });
 
-alert("✅ معلومات په بریالیتوب ثبت شول.");
 
-form.reset();
+}
 
-location.reload();
+// ===============================
+// Input Validation Helpers
+// ===============================
+
+
+const ageInput =
+document.getElementById("age");
+
+
+if(ageInput){
+
+
+ageInput.addEventListener(
+"input",
+()=>{
+
+
+ageInput.value =
+ageInput.value.replace(
+/[^0-9]/g,
+""
+);
+
+
+});
+
+
+}
+
+
+
+
+
+const formNumberInput =
+document.getElementById(
+"formNumber"
+);
+
+
+
+if(formNumberInput){
+
+
+formNumberInput.addEventListener(
+"input",
+()=>{
+
+
+formNumberInput.value =
+formNumberInput.value.replace(
+/\s/g,
+""
+);
+
+
+});
+
+
+}
+
+
+
+
+
+const tazkiraInput =
+document.getElementById(
+"tazkiraNumber"
+);
+
+
+
+if(tazkiraInput){
+
+
+tazkiraInput.addEventListener(
+"input",
+()=>{
+
+
+tazkiraInput.value =
+tazkiraInput.value.replace(
+/[^0-9-]/g,
+""
+);
+
+
+});
+
 
 }
